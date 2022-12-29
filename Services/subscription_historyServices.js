@@ -1,7 +1,7 @@
 const subscription_historyModel = require("../models/subscription_historyModel");
 const mongoose = require("mongoose");
 const moment = require('moment');
-const subscriptionPlansModel = require("../models/SubscriptionPlansModel");
+const subscriptionPlansModel = require("../models/subscriptionPlanModel");
 // Get All subscription_history 
 exports.getAllsubscription_historys = (req, res) => {
     subscription_historyModel.find({}, (error, result) => {

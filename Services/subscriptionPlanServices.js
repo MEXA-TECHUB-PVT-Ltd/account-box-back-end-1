@@ -1,4 +1,4 @@
-const SubscriptionPlansModel = require("../models/SubscriptionPlansModel");
+const SubscriptionPlansModel = require("../models/subscriptionPlanModel");
 const mongoose = require("mongoose");
 // Get All SubscriptionPlan 
 exports.getAllSubscriptionPlans = (req, res) => {

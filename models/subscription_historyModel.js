@@ -7,7 +7,7 @@ const subscription_historySchema = new mongoose.Schema({
     },
     subscription_plans_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'subscription-plans'
+        ref: 'subscription_plans'
     },
     transiction_id: String,
     start_date: String,
