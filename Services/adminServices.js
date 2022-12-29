@@ -179,25 +179,46 @@ exports.createadmin = async (req, res) => {
 }
 // Update 
 exports.updateadmin = async (req, res) => {
-    const hashedPassword = bcrypt.hashSync(req.body.password, 12)
-    const updateData = {
-        username: req.body.username,
-        email: req.body.email,
-        password: hashedPassword,
-        img: req.body.img,
-        privacy_policy: req.body.privacy_policy,
-        terms_and_conditions: req.body.terms_and_conditions,
-    }
-    const options = {
-        new: true
-    }
-    adminModel.findByIdAndUpdate(req.body._id, updateData, options, (error, result) => {
-        if (error) {
-            res.json(error.message)
-        } else {
-            res.send({data:result,message:"Updated Successfully"})
+    if(req.body.password===undefined||req.body.password===null){
+        const updateData = {
+            username: req.body.username,
+            email: req.body.email,
+            img: req.body.img,
+            privacy_policy: req.body.privacy_policy,
+            terms_and_conditions: req.body.terms_and_conditions,
         }
-    })
+        const options = {
+            new: true
+        }
+        adminModel.findByIdAndUpdate(req.body._id, updateData, options, (error, result) => {
+            if (error) {
+                res.json(error.message)
+            } else {
+                res.send({data:result,message:"Updated Successfully"})
+            }
+        })
+    }else{
+        const hashedPassword = bcrypt.hashSync(req.body.password, 12)
+        const updateData = {
+            username: req.body.username,
+            email: req.body.email,
+            password: hashedPassword,
+            img: req.body.img,
+            privacy_policy: req.body.privacy_policy,
+            terms_and_conditions: req.body.terms_and_conditions,
+        }
+        const options = {
+            new: true
+        }
+        adminModel.findByIdAndUpdate(req.body._id, updateData, options, (error, result) => {
+            if (error) {
+                res.json(error.message)
+            } else {
+                res.send({data:result,message:"Updated Successfully"})
+            }
+        })
+    }
+    
 }
 
 
