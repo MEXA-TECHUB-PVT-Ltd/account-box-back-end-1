@@ -26,6 +26,19 @@ exports.getSpecificTycoon = (req, res) => {
         }
     })
 }
+// Get Tycoon 
+exports.getSpecificTycoonMonthly = async(req, res) => {
+    // const data=await tycoonModel.aggregate().sortByCount("created_at")
+    const data=await tycoonModel.aggregate(
+        [ 
+        { $unwind: "$created_at" },  
+        { $sortByCount: "$created_at" },
+        // { $sort: { created_at: -1 } }
+     ] 
+    )
+      res.json(data)
+
+}
 // Login 
 exports.loginTycoon = (req, res) => {
     const findUser = {

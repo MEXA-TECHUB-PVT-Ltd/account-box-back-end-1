@@ -10,6 +10,8 @@ router.put("/update-password" , controller.updateTycoonPassword);
 router.put("/login" , controller.loginTycoon);
 router.put("/logout" , controller.logoutTycoon);
 router.post("/forget-password" , controller.forgetPasswordTycoon);
+router.get("/monthly-data" , controller.getSpecificTycoonMonthly);
+
 
 
 module.exports = router;
