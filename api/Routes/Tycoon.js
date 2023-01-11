@@ -11,6 +11,8 @@ router.put("/login" , controller.loginTycoon);
 router.put("/logout" , controller.logoutTycoon);
 router.post("/forget-password" , controller.forgetPasswordTycoon);
 router.get("/monthly-data" , controller.getSpecificTycoonMonthly);
+router.post("/monthly-dataM" , controller.getSpecificTycoonMonthlyM);
+
 
 
 

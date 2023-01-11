@@ -29,12 +29,57 @@ exports.getSpecificTycoon = (req, res) => {
 // Get Tycoon 
 exports.getSpecificTycoonMonthly = async(req, res) => {
     // const data=await tycoonModel.aggregate().sortByCount("created_at")
+    
+
     const data=await tycoonModel.aggregate(
         [ 
+        // { 
+        //     $group: {
+        //         _id:  "$created_at"  , 
+        //         count: { $sum: 1 }
+        //     } 
+        // },
+        // {
+        //     $sort: { "_id": 1 }
+        // },
         { $unwind: "$created_at" },  
         { $sortByCount: "$created_at" },
+        // {$sort: {"_id": 1} }
         // { $sort: { created_at: -1 } }
      ] 
+    )
+    console.log(data)
+    for(let article of data) {
+        let dateArr = article._id.split('/');
+        // Year, month, and day from the array. We subtract 1 from month, since months start counting from 0 in Javascript dates.
+        let year = parseFloat(dateArr[2]);
+        let month = parseFloat(dateArr[1]) - 1;
+        let day = parseFloat(dateArr[0])
+        // Pass in the different components as year, month, day to get the valid date
+        let articleDate = new Date(year, month, day);
+        // Update the object
+        article._id = articleDate
+    }   
+    
+    data.sort((a, b) => a._id - b._id);
+      res.json(data)
+
+}
+// Get Tycoon 
+exports.getSpecificTycoonMonthlyM = async(req, res) => {
+    const data=await tycoonModel.aggregate(
+        [  
+        { 
+            $group: {
+                _id: { $substrCP: [ "$created_at", 6, 10 ]  }, 
+                count: { $sum: 1 }
+            } 
+        },
+        {
+            $sort: { "_id": 1 }
+        },
+       
+    ] 
     )
       res.json(data)
 
