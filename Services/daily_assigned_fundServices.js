@@ -44,70 +44,40 @@ exports.getFundsByTycoonId = (req, res) => {
 exports.getFundsByTycoonIdAndDate = (req, res) => {
     const TycoonId = req.body.tycoon_id;
     const dateFund = req.body.date
-    // const Result=shopsModel.aggregate([
-    //     { $match: { tycoon_id: TycoonId}},
-    //     { $unwind: '$assigned_funds'},
-    //     // { $match: {'assigned_funds.date':dateFund}}
-    // ])
-    //     res.json(Result)
     shopsModel.find({ tycoon_id: TycoonId }, function (err, foundResult) {
-        try {
-            let arrayData = foundResult
-            let arrayTemp = [];
-            let assignfund =[];
+        // if(err){
+        //     res.json(err);
+        // }else{
+ try {
+    let arrayData = foundResult
+    let arrayTemp = [];
+    let assignfund =[];
+    for (let i = 0; i < arrayData.length; i++) {
+          assignfund=arrayData[i].assigned_funds
+          if(assignfund.length===0){
+            // console.log('hello')
+            arrayData[i].assigned_funds=assignfund
 
-            // res.json(arrayData)
-            for (let i = 0; i < arrayData.length; i++) {
-                  assignfund=arrayData[i].assigned_funds
-                // arrayTemp.push(arrayData[i])
-                var aquaticCreatures =  assignfund.filter(function(creature) {
-                    return creature.date == dateFund;
-                  });
-                 arrayData[i].assigned_funds=aquaticCreatures
-                // for(let j=0;j<arrayData[i].assigned_funds.length;j++){
-                // console.log("j", j)
-                // // var newArray = arrayData[i].assigned_funds;
-                // // const result = newArray.filter(word => word.amount ===20);
-               
-                // // console.log(newArray);
-                // // arrayTemp=arrayTemp[i]
-                // // arrayTemp[i].assigned_funds.findIndex(x => x.date === dateFund);
+          }else{
+            // console.log('hello1')
 
+            var aquaticCreatures =  assignfund.filter(function(creature) {
+                return creature.date == dateFund;
+              });
+             arrayData[i].assigned_funds=aquaticCreatures
+          }
+       
+    // }
+        }
+        res.json(arrayData)
 
-
-                // }
-                res.json(arrayData)
-            }
-            // res.json(arrayTemp)
-
-            // res.json({ data: foundResult, count: foundResult.length })
+       
         } catch (err) {
             res.json(err)
         }
     }).sort({ $natural: -1 })
         .populate('manager_id')
         .populate('assigned_funds')
-
-    // { "$lookup": {
-    //     "from": "test",
-    //     "localField": "id",
-    //     "foreignField": "contain",
-    //     "as": "childs"
-    // }}
-
-    // array1 = shopsModel.aggregate([
-    //     {
-    //         $lookup: {
-    //             from:"daily_assigned_fund",
-    //             localField:"_id",
-    //             foreignField:"shop_id",
-    //             as:"shop_details"
-    //         }
-    //     }
-    // ]);
-    // res.json(array1)
-
-
 
 }
 // Get daily_assigned_fund by shop Id
