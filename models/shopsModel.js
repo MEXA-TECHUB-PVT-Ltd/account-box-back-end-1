@@ -12,6 +12,13 @@ const shopSchema = new mongoose.Schema({
     name: String,
     img: String,
     created_at: String,
+    assigned_funds:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'daily_Assigned_fund'
+        }
+    ]
+    // shop_details:Array
 }
 );
 module.exports = mongoose.model("shop", shopSchema);
