@@ -91,6 +91,37 @@ exports.getFundsByShopId = (req, res) => {
     .populate('turnover_id')
     .populate('winning_id')
 }
+// Get daily_reporting by shop Id
+exports.getFundsByShopIdAndStatus = (req, res) => {
+    const ShopId = req.body.shop_id;
+    const Status = req.body.status;
+
+    daily_reportingModel.find({ shop_id: ShopId,status:Status }, function (err, foundResult) {
+        try {
+            res.json({ data: foundResult, count: foundResult.length })
+        } catch (err) {
+            res.json(err)
+        }
+    }).populate('manager_id')
+    .populate('shop_id')
+    .populate('balance_account_id')
+    .populate({
+        path: 'balance_account_id',
+        populate: {
+          path: 'daily_assigned_fund_id',
+          model: 'daily_Assigned_fund',
+        }
+      })
+      .populate({
+        path: 'balance_account_id',
+        populate: {
+          path: 'expenses_id',
+          model: 'expenses',
+        }
+      })
+    .populate('turnover_id')
+    .populate('winning_id')
+}
 // Get daily_reports by date
 exports.getFundsByDate = (req, res) => {
     const CreateDate = req.body.date;

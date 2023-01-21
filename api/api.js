@@ -24,6 +24,9 @@ const daily_reporting = require('./Routes/daily_reporting')
 const debt = require('./Routes/debts')
 const debts_recovery = require('./Routes/debts_recovery')
 const notification = require('./Routes/notification')
+const privacy_policy = require('./Routes/Privacy_policy')
+const terms_and_conditions = require('./Routes/terms_And_conditions')
+const about_us = require('./Routes/about_us')
 
 
 
@@ -56,6 +59,10 @@ router.use('/daily_reporting',daily_reporting);
 router.use('/debts',debt);
 router.use('/debts_recovery',debts_recovery);
 router.use('/notification',notification);
+router.use('/privacy_policy',privacy_policy);
+router.use('/terms_and_conditions',terms_and_conditions);
+router.use('/about_us',about_us);
+
 
 
 
