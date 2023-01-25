@@ -91,6 +91,19 @@ exports.getFundsByShopId = (req, res) => {
     .populate('turnover_id')
     .populate('winning_id')
 }
+// Delete All
+exports.deleteAll = (req, res) => {
+    daily_reportingModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Get daily_reporting by shop Id
 exports.getFundsByShopIdAndStatus = (req, res) => {
     const ShopId = req.body.shop_id;

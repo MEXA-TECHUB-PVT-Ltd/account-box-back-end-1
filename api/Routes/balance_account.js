@@ -9,5 +9,7 @@ router.get("/get-BalanceAccount-by-date/:date" , controller.getAllBalanceAccount
 router.delete("/delete/:balance_accountsId" , controller.deletebalance_account);
 router.post("/create" , controller.createbalance_account);
 router.put("/update" , controller.updatebalance_account);
+router.delete("/delete-all" ,controller.deleteAll)
+router.get("/get-balance-account-by-manager_id/:manager_id" , controller.getbalance_accountByMangerId)
 
 module.exports = router;

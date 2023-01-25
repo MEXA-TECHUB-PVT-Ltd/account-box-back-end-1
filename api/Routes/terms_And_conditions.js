@@ -6,5 +6,6 @@ router.get("/get-terms_and_conditions-by-ID/:terms_and_conditionsId" , controlle
 router.delete("/delete/:terms_and_conditionsId" , controller.deleteterms_and_conditions);
 router.post("/create" , controller.createterms_and_conditions);
 router.put("/update" , controller.updateterms_and_conditions);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

@@ -8,5 +8,6 @@ router.get("/get-all-manager-shops/:ManagerId" , controller.getManagerShops)
 router.delete("/delete/:ShopId" , controller.deleteShop);
 router.post("/create" , controller.createShop);
 router.put("/update" , controller.updateShop);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

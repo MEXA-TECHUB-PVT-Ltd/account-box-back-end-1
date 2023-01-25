@@ -27,6 +27,19 @@ exports.getSpecificdebt_recovery = (req, res) => {
     }).populate('shop_id')
     .populate('debt_id')
 }
+// Delete All
+exports.deleteAll = (req, res) => {
+    debts_recoveryModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Get DebtsRecovery By debt 
 exports.getShopdebt_recovery = (req, res) => {
     const debtId = req.params.debtId;

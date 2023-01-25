@@ -5,6 +5,10 @@ const winningsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'managers'
     },
+    tycoon_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tycoon'
+    },
     shop_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'shop'

@@ -11,5 +11,6 @@ router.get("/get-funds-by-shopId/:shop_id" , controller.getFundsByShopId)
 router.delete("/delete/:daily_assigned_fundsId" , controller.deletedaily_assigned_fund);
 router.post("/create" , controller.createdaily_assigned_fund);
 router.put("/update" , controller.updatedaily_assigned_fund);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

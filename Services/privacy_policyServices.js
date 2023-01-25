@@ -23,6 +23,19 @@ exports.getSpecificPrivacy_Policy = (req, res) => {
         }
     })
 }
+// Delete All
+exports.deleteAll = (req, res) => {
+    Privacy_PolicyModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Delete 
 exports.deletePrivacy_Policy = (req, res) => {
     const Privacy_PolicyId = req.params.Privacy_PolicyId;

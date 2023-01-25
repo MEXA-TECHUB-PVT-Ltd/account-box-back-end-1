@@ -14,5 +14,6 @@ router.put("/update" , controller.updatedaily_reporting);
 router.put("/update-editable" , controller.updatedaily_reportingEditable);
 router.put("/update-turnoverId" , controller.updateturnoverId);
 router.put("/update-winningId" , controller.updatewinningId);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

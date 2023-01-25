@@ -40,6 +40,19 @@ exports.getFundsByTycoonId = (req, res) => {
     }).populate('tycoon_id')
         .populate('shop_id')
 }
+// Delete All
+exports.deleteAll = (req, res) => {
+    daily_assigned_fundModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Get daily_assigned_fund by Tycoon Id and date 
 exports.getFundsByTycoonIdAndDate = (req, res) => {
     const TycoonId = req.body.tycoon_id;

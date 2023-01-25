@@ -5,6 +5,10 @@ const inventorySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'shop'
     },
+    tycoon_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tycoon'
+    },
     manager_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'managers'

@@ -6,6 +6,10 @@ const managersSchema = new mongoose.Schema({
     name: String,
     photo: String,
     created_at: String,
+    shop_id:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'shop'
+    }]
 }
 );
 module.exports = mongoose.model("managers", managersSchema);

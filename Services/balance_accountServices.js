@@ -35,6 +35,33 @@ exports.getSpecificbalance_account = (req, res) => {
     .populate('manager_id')
     .populate('expenses_id')
 }
+// Get balance_account 
+exports.getbalance_accountByMangerId= (req, res) => {
+    const balance_accountId = req.params.manager_id;
+    balance_accountModel.find({ manager_id: balance_accountId }, function (err, foundResult) {
+        try {
+            res.json({ data: foundResult })
+        } catch (err) {
+            res.json(err)
+        }
+    }).populate('daily_assigned_fund_id')
+    .populate('shop_id')
+    .populate('manager_id')
+    .populate('expenses_id')
+}
+// Delete All
+exports.deleteAll = (req, res) => {
+    balance_accountModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Get balance_account by shop Id
 exports.getAllBalanceAccountByShopId = (req, res) => {
     const ShopId = req.params.shop_id;

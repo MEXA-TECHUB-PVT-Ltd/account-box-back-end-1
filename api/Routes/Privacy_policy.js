@@ -6,5 +6,6 @@ router.get("/get-policy-by-ID/:Privacy_PolicyId" , controller.getSpecificPrivacy
 router.delete("/delete/:Privacy_PolicyId" , controller.deletePrivacy_Policy);
 router.post("/create" , controller.createPrivacy_Policy);
 router.put("/update" , controller.updatePrivacy_Policy);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

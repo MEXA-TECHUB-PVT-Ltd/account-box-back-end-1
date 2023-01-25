@@ -27,6 +27,7 @@ const notification = require('./Routes/notification')
 const privacy_policy = require('./Routes/Privacy_policy')
 const terms_and_conditions = require('./Routes/terms_And_conditions')
 const about_us = require('./Routes/about_us')
+const comission = require('./Routes/comission')
 
 
 
@@ -62,6 +63,8 @@ router.use('/notification',notification);
 router.use('/privacy_policy',privacy_policy);
 router.use('/terms_and_conditions',terms_and_conditions);
 router.use('/about_us',about_us);
+router.use('/comission',comission);
+
 
 
 

@@ -11,5 +11,6 @@ router.get("/get-debtRecovery-by-recoveryDate" , controller.getDebtRecoveryByRec
 router.delete("/delete/:debtId" , controller.deletedebt_recovery);
 router.post("/create" , controller.createdebt_recovery);
 router.put("/update" , controller.updatedebt_recovery);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

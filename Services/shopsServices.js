@@ -15,6 +15,9 @@ exports.getAllShops = (req, res) => {
     }).sort({ $natural: -1 })
         .populate('manager_id')
         .populate('tycoon_id')
+        .populate('shop_products')
+        .populate('shop_cashiers')
+
 }
 // Get Shop 
 exports.getSpecificShop = (req, res) => {
@@ -27,6 +30,8 @@ exports.getSpecificShop = (req, res) => {
         }
     }).populate('manager_id')
         .populate('tycoon_id')
+        .populate('shop_products')
+        .populate('shop_cashiers')
 }
 // Get Tycoon Shops 
 exports.getTycoonShops = (req, res) => {
@@ -40,6 +45,8 @@ exports.getTycoonShops = (req, res) => {
     }).sort({ $natural: -1 })
         .populate('manager_id')
         .populate('tycoon_id')
+        .populate('shop_products')
+        .populate('shop_cashiers')
 }
 // Get Manager Shops 
 exports.getManagerShops = (req, res) => {
@@ -53,6 +60,8 @@ exports.getManagerShops = (req, res) => {
     }).sort({ $natural: -1 })
         .populate('manager_id')
         .populate('tycoon_id')
+        .populate('shop_products')
+        .populate('shop_cashiers')
 }
 // Delete 
 exports.deleteShop = (req, res) => {
@@ -62,6 +71,19 @@ exports.deleteShop = (req, res) => {
             res.send({ message: error.message })
         } else {
             res.json({ message: "Deleted Successfully" })
+        }
+    })
+}
+// Delete All
+exports.deleteAll = (req, res) => {
+    shopsModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
         }
     })
 }
@@ -91,6 +113,7 @@ exports.createShop = async (req, res) => {
 
                                     const Shop = new shopsModel({
                                         _id: mongoose.Types.ObjectId(),
+                                        shop_no:req.body.shop_no,
                                         tycoon_id: req.body.tycoon_id,
                                         manager_id: req.body.manager_id,
                                         name: req.body.name,
@@ -102,6 +125,22 @@ exports.createShop = async (req, res) => {
                                         if (error) {
                                             res.send(error)
                                         } else {
+
+                                            const updateData = {
+                                                $push: {
+                                                    shop_id: result._id
+                                                }
+                                            }
+                                            const options = {
+                                                new: true
+                                            }
+                                            managersModel.findByIdAndUpdate(req.body.manager_id, updateData, options, (error, result) => {
+                                                if (error) {
+                                                    res.json(error.message)
+                                                } else {
+                                                    // res.send({ data: result, message: "Updated Successfully" })
+                                                }
+                                            })
                                             res.json({ data: result, message: "Created Successfully" })
                                         }
                                     })
@@ -127,6 +166,7 @@ exports.createShop = async (req, res) => {
 // Update 
 exports.updateShop = async (req, res) => {
     const updateData = {
+        shop_no:req.body.shop_no,
         name: req.body.name,
         img: req.body.img,
     }

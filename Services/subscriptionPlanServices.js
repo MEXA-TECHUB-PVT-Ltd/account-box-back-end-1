@@ -32,6 +32,19 @@ exports.deleteSubscriptionPlan = (req, res) => {
         }
     })
 }
+// Delete All
+exports.deleteAll = (req, res) => {
+    SubscriptionPlansModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Create 
 exports.createSubscriptionPlan = async (req, res) => {
     SubscriptionPlansModel.find({ name: req.body.name }, (error, result) => {
