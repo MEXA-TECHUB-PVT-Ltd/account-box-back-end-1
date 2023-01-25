@@ -69,6 +69,7 @@ exports.createnotification = async (req, res) => {
         to: req.body.to,
         msgContent: req.body.msgContent,
         dateTime:moment(Createddate).format("DD/MM/YYYY"),
+        date:Createddate,
         readStatus:false
     })
     notificationMessage.save((error, result) => {

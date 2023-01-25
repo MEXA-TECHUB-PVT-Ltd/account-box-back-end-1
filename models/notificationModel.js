@@ -17,7 +17,8 @@ const notificationSchema = new mongoose.Schema({
     to: String,
     msgContent: String,
     dateTime: String,
-    readStatus: Boolean
+    readStatus: Boolean,
+    date:String
 }
 );
 module.exports = mongoose.model("notification", notificationSchema);

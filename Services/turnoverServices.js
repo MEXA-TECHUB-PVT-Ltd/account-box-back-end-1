@@ -157,7 +157,8 @@ exports.createturnover = async (req, res) => {
                     product_id:req.body.product_id,
                     cashier_id:req.body.cashier_id,
                     amount: req.body.amount,
-                    created_at:moment(Createddate).format("DD/MM/YYYY")
+                    created_at:moment(Createddate).format("DD/MM/YYYY"),
+                    dateTime:req.body.created_at
 
                 });
                 turnover.save((error, result) => {
