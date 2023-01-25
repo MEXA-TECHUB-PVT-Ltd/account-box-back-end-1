@@ -10,6 +10,7 @@ router.put("/update-password" , controller.updateManagerPassword);
 
 router.put("/login" , controller.loginManager);
 router.post("/forget-password" , controller.forgetPasswordManager);
+router.delete("/delete-all" ,controller.deleteAll)
 
 
 module.exports = router;

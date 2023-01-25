@@ -9,5 +9,7 @@ router.get("/get-turnovers-by-date-and-product" , controller.getTurnoverByDateAn
 router.delete("/delete/:turnoversId" , controller.deleteturnover);
 router.post("/create" , controller.createturnover);
 router.put("/update" , controller.updateturnover);
+router.delete("/delete-all" ,controller.deleteAll)
+router.post("/get-turnovers-by-date-range-and-product" , controller.getTurnoverByDateRangeAndProductId)
 
 module.exports = router;

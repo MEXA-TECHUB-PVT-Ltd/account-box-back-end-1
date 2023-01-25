@@ -27,6 +27,43 @@ exports.getSpecificInventory = (req, res) => {
     }).populate('shop_id')
         .populate('manager_id')
 }
+// Get Inventory 
+exports.getInventoryByMangerId = (req, res) => {
+    const InventoryId = req.params.manager_id;
+    inventoryModel.find({ manager_id: InventoryId }, function (err, foundResult) {
+        try {
+            res.json({ data: foundResult })
+        } catch (err) {
+            res.json(err)
+        }
+    }).populate('shop_id')
+        .populate('manager_id')
+}
+// Get Inventory 
+exports.getInventoryByTycoonId = (req, res) => {
+    const InventoryId = req.params.tycoon_id;
+    inventoryModel.find({ tycoon_id: InventoryId }, function (err, foundResult) {
+        try {
+            res.json({ data: foundResult })
+        } catch (err) {
+            res.json(err)
+        }
+    }).populate('shop_id')
+        .populate('manager_id')
+}
+// Delete All
+exports.deleteAll = (req, res) => {
+    inventoryModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Get Shop Inventory 
 exports.getShopInventory = (req, res) => {
     const ShopId = req.params.shop_id;
@@ -53,6 +90,7 @@ exports.deleteInventory = (req, res) => {
 }
 // Create 
 exports.createInventory = async (req, res) => {
+  
     inventoryModel.find({ shop_id: req.body.shop_id, serial_no: req.body.serial_no }, (error, result) => {
         if (error) {
             res.send(error)
@@ -64,11 +102,14 @@ exports.createInventory = async (req, res) => {
                         res.send(error)
                     } else {
                         // res.send(result[0].manager_id)
-                        if (result[0].manager_id == req.body.manager_id) {
+                        const ManagerId=result[0].manager_id
+                        const TycoonId=result[0].tycoon_id
+                        // if (result[0].manager_id == req.body.manager_id) {
                             const Inventory = new inventoryModel({
                                 _id: mongoose.Types.ObjectId(),
                                 shop_id: req.body.shop_id,
-                                manager_id: req.body.manager_id,
+                                manager_id: ManagerId,
+                                tycoon_id: TycoonId,
                                 serial_no: req.body.serial_no,
                                 equipment_name: req.body.equipment_name,
                                 quantity: req.body.quantity,
@@ -82,10 +123,6 @@ exports.createInventory = async (req, res) => {
                                     res.json({ data: result, message: "Created Successfully" })
                                 }
                             })
-                        } else {
-                            res.json({ data: result, message: "Wrong Manager Id for this Shop" })
-                        }
-
                     }
                 })
 

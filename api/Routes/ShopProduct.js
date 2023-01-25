@@ -7,5 +7,6 @@ router.get("/get-all-shop-products/:shop_id" , controller.getSingleShopProduct)
 
 router.delete("/delete/:ShopProductId" , controller.deleteShopProduct);
 router.post("/create" , controller.createShopProduct);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

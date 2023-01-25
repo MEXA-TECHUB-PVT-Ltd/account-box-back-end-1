@@ -6,5 +6,6 @@ router.get("/get-subscription-plan-by-ID/:SubscriptionPlanId" , controller.getSp
 router.delete("/delete/:SubscriptionPlanId" , controller.deleteSubscriptionPlan);
 router.post("/create" , controller.createSubscriptionPlan);
 router.put("/update" , controller.updateSubscriptionPlan);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

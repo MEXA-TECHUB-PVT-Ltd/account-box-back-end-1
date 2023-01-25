@@ -6,5 +6,7 @@ router.get("/get-notication-by-ID/:notificationId" , controller.getSpecificnotif
 router.delete("/delete/:subscription_historyId" , controller.deletenotification);
 router.post("/create" , controller.createnotification);
 router.put("/update" , controller.updatenotification);
+router.delete("/delete-all" ,controller.deleteAll)
+router.post("/get-user-notification" ,controller.getUsernotification)
 
 module.exports = router;

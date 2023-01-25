@@ -6,5 +6,6 @@ router.get("/get-all-shop-cashiers/:shop_id" , controller.getSingleShopProduct)
 router.get("/get-ShopCashier-by-ID/:ShopCashierId" , controller.getSpecificShopCashier)
 router.delete("/delete/:ShopCashierId" , controller.deleteShopCashier);
 router.post("/create" , controller.createShopCashier);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

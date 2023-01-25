@@ -84,6 +84,19 @@ exports.updateProduct = async (req, res) => {
         }
     })
 }
+// Delete All
+exports.deleteAll = (req, res) => {
+    productModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 
 
 

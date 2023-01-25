@@ -9,5 +9,6 @@ router.put("/update-credentials" , controller.updateadmin);
 router.put("/logout" , controller.logoutAdmin);
 router.put("/login" , controller.loginAdmin);
 router.post("/forget-password" , controller.forgetPasswordAdmin);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

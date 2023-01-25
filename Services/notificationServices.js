@@ -23,6 +23,30 @@ exports.getSpecificnotification = (req, res) => {
         }
     })
 }
+// Get notification 
+exports.getUsernotification = (req, res) => {
+    // const notificationId = req.params.notificationId;
+    notificationModel.find({ to: req.body.to,user_type:req.body.user_type }, function (err, foundResult) {
+        try {
+            res.json({data:foundResult})
+        } catch (err) {
+            res.json(err)
+        }
+    })
+}
+// Delete All
+exports.deleteAll = (req, res) => {
+    notificationModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Delete 
 exports.deletenotification = (req, res) => {
     const notificationId = req.params.notificationId;
@@ -37,9 +61,10 @@ exports.deletenotification = (req, res) => {
 // Create 
 exports.createnotification = async (req, res) => {
     const Createddate= req.body.dateTime;
-
     const notificationMessage = new notificationModel({
         _id: mongoose.Types.ObjectId(),
+        user_type:req.body.user_type,
+        notification_type:req.body.notification_type,
         from: req.body.from,
         to: req.body.to,
         msgContent: req.body.msgContent,

@@ -7,5 +7,6 @@ router.get("/get-subscription-history-by-TycoonId/:tycoon_id" , controller.getSp
 router.delete("/delete/:subscription_historyId" , controller.deletesubscription_history);
 router.post("/create" , controller.createsubscription_history);
 router.put("/update" , controller.updatesubscription_history);
+router.delete("/delete-all" ,controller.deleteAll)
 
 module.exports = router;

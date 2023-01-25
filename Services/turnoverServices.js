@@ -75,6 +75,44 @@ exports.getTurnoverByDateAndProductId = (req, res) => {
     .populate('product_id')
     .populate('cashier_id')
 }
+// Get turnover by date and product Id
+exports.getTurnoverByDateRangeAndProductId = (req, res) => {
+    const sdate=req.body.startDate
+    const edate=req.body.endDate
+    console.log(sdate)
+    console.log(edate)
+
+    turnoversModel.find(
+        {
+        product_id:req.body.product_id, 
+        $or:[
+             { "created_at" : {"$gte": sdate, "$lte":edate}}
+             ]}
+             , function (err, foundResult) {
+        try {
+            res.json(foundResult)
+        } catch (err) {
+            res.json(err)
+        }
+    })
+    // turnoversModel.aggregate([
+    //     // {$match:{_id: req.body.product_id}},
+    //     { $match: {
+    //         created_at: {
+    //           $filter: {
+    //             input: "$created_at", // le tableau à limiter 
+    //             as: "index", // un alias
+    //             cond: {$and: [
+    //               { $gte: req.body.startDate },
+    //               { $lte: req.body.endDate }
+    //             ]}
+    //           }
+    //         }
+    //     }}
+    //   ])
+    //   .project({'days.day':1, 'days.data':1})
+    //   .then(result => { res.status(200).send({data: { message: result }})})
+}
 
 // Delete 
 exports.deleteturnover = (req, res) => {
@@ -84,6 +122,19 @@ exports.deleteturnover = (req, res) => {
             res.send({ message: error.message })
         } else {
             res.json({ message: "Deleted Successfully" })
+        }
+    })
+}
+// Delete All
+exports.deleteAll = (req, res) => {
+    turnoversModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
         }
     })
 }

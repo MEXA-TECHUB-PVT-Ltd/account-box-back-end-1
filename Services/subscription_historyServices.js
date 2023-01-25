@@ -23,6 +23,19 @@ exports.getSpecificsubscription_history = (req, res) => {
         }
     }).populate('subscription_plans_id').populate('tycoon_id')
 }
+// Delete All
+exports.deleteAll = (req, res) => {
+    subscription_historyModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Get subscription_history by tycoon Id
 exports.getSpecificsubscription_historyByTycoon = (req, res) => {
     const TycoonId = req.params.tycoon_id;

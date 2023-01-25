@@ -5,6 +5,14 @@ const debtsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'shop'
     },
+    tycoon_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tycoon'
+    },
+    manager_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'managers'
+    },
     name: String,
     amount: String,
     threshold_date: String,

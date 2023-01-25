@@ -74,6 +74,19 @@ exports.logoutAdmin = async (req, res) => {
         }
     })
 }
+// Delete All
+exports.deleteAll = (req, res) => {
+    adminModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Forget Password Otp 
 exports.forgetPasswordAdmin = async (req, res) => {
     let data = await adminModel.findOne({

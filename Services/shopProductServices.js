@@ -1,6 +1,7 @@
 const shopProductsModel = require("../models/shopProductsModel");
 const mongoose = require("mongoose");
 const moment = require('moment');
+const shopsModel = require("../models/shopsModel");
 
 // Get All ShopProduct 
 exports.getAllShopProducts = (req, res) => {
@@ -26,6 +27,19 @@ exports.getSpecificShopProduct = (req, res) => {
     }).populate('shop_id')
     .populate('product_id')
 }
+// Delete All
+exports.deleteAll = (req, res) => {
+    shopProductsModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Get SingleShopProduct 
 exports.getSingleShopProduct = (req, res) => {
     const ShopId = req.params.shop_id;
@@ -46,7 +60,23 @@ exports.deleteShopProduct = (req, res) => {
         if (error) {
             res.send({ message: error.message })
         } else {
+            const updateData = {
+            $pull: {
+                shop_products: result.product_id
+            }
+        }
+        const options = {
+            new: true
+        }
+        shopsModel.findByIdAndUpdate(result.shop_id, updateData, options, (error, result) => {
+            if (error) {
+                res.json(error.message)
+            } else {
+                // res.send({ data: result, message: "Updated Successfully" })
+            }
+        })
             res.json({ message: "Deleted Successfully" })
+
         }
     })
 }
@@ -71,6 +101,21 @@ exports.createShopProduct = async (req, res) => {
                         res.send(error)
                     } else {
                         res.json({ data: result, message: "Created Successfully" })
+                        const updateData = {
+                            $push: {
+                                shop_products: result.product_id
+                            }
+                        }
+                        const options = {
+                            new: true
+                        }
+                        shopsModel.findByIdAndUpdate(req.body.shop_id, updateData, options, (error, result) => {
+                            if (error) {
+                                res.json(error.message)
+                            } else {
+                                // res.send({ data: result, message: "Updated Successfully" })
+                            }
+                        })
                     }
                 })
 

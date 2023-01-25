@@ -26,6 +26,19 @@ exports.getSpecificTycoon = (req, res) => {
         }
     })
 }
+// Delete All
+exports.deleteAll = (req, res) => {
+    tycoonModel.deleteMany({}, (error, result) => {
+        if (error) {
+            res.send(error)
+            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+
+        } else {
+            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+
+        }
+    })
+}
 // Get Tycoon 
 exports.getSpecificTycoonMonthly = async(req, res) => {
     // const data=await tycoonModel.aggregate().sortByCount("created_at")
