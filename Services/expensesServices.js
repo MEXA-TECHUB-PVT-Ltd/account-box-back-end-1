@@ -137,6 +137,7 @@ exports.createexpense = async (req, res) => {
                         res.send(error)
                     } else {
                         res.json({ data: result, message: "Created Successfully" })
+                        
                     }
                 })
 

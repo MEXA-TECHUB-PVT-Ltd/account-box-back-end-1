@@ -108,6 +108,46 @@ exports.getFundsByShopIdAndDate = (req, res) => {
         .populate('shop_id')
 }
 // Get daily_assigned_fund by shop Id
+exports.getFundsByShopIdAndCurrentYear = (req, res) => {
+    const ShopId = req.body.shop_id;
+    // var date = new Date();
+    // var firstDay = new Date(date.getFullYear(), date.getMonth() - 2, 1);
+    // var lastDay = new Date(date.getFullYear(), date.getMonth(), 0);
+    // console.log(firstDay.toISOString())
+    // console.log(lastDay.toISOString())
+    const currentYear = new Date().getFullYear();
+console.log(currentYear); // 👉️ 2023
+
+const firstDay = new Date(currentYear, 0, 1);
+console.log(firstDay.toISOString()); // 👉️ Sun Jan 01 2023
+
+const lastDay = new Date(currentYear, 11, 31);
+console.log(lastDay.toISOString());
+    // const dateFund = req.body.date
+    daily_assigned_fundModel.find({
+        shop_id: req.body.shop_id,
+        $or: [
+            { "dateTime": { "$gte": firstDay.toISOString(), "$lte": lastDay.toISOString() } }
+        ]
+    }, (error, foundResult) => {
+        if (error) {
+            res.json(error)
+
+        } else {
+            res.json(foundResult)
+
+        }
+    })
+    // daily_assigned_fundModel.find({ shop_id: ShopId, date: dateFund }, function (err, foundResult) {
+    //     try {
+    //         res.json({ data: foundResult, count: foundResult.length })
+    //     } catch (err) {
+    //         res.json(err)
+    //     }
+    // }).populate('tycoon_id')
+    //     .populate('shop_id')
+}
+// Get daily_assigned_fund by shop Id
 exports.getFundsByShopId = (req, res) => {
     const ShopId = req.params.shop_id;
     daily_assigned_fundModel.find({ shop_id: ShopId }, function (err, foundResult) {
@@ -154,7 +194,8 @@ exports.createdaily_assigned_fund = async (req, res) => {
                                 tycoon_id: req.body.tycoon_id,
                                 shop_id: req.body.shop_id,
                                 amount: req.body.amount,
-                                date: moment(Createddate).format("DD/MM/YYYY")
+                                date: moment(Createddate).format("DD/MM/YYYY"),
+                                dateTime:Createddate
 
                             });
                             daily_assigned_fund.save((error, result) => {

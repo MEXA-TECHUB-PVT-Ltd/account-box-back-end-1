@@ -62,11 +62,24 @@ exports.deletecomission = (req, res) => {
 }
 // Create 
 exports.createcomission = async (req, res) => {
-    
-    const sdate = req.body.startDate
-    const edate = req.body.endDate
+    const today = new Date(); // get current date
+// var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+// var last = first + 6;
+console.log(today)
+const firstDay = new Date(today.setDate(today.getDate() - today.getDay()));
+
+// ✅ Get the last day of the current week (Saturday)
+const lastDay = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+
+console.log(firstDay.toISOString()); // 👉️ Sunday August 7 2022
+console.log(lastDay.toISOString()); // 👉️ Saturday August 13 2022
+// console.log(first.toISOString())
+// console.log(last.toISOString())
+
+    const sdate = firstDay.toISOString()
+    const edate = lastDay.toISOString()
     const gross_commission = req.body.gross_commission
-    const dateMonthly = req.body.commision_created_at
+    const dateMonthly = today.toISOString()
     console.log(dateMonthly.slice(0, 7))
     const YearData = dateMonthly.slice(0, 4)
     const MonthData = dateMonthly.slice(0, 7)
@@ -106,7 +119,7 @@ exports.createcomission = async (req, res) => {
                         let debts = foundResult;
                         if (debts.length === 0) {
                             Debts = 0
-
+7
                         } else {
                             for (var i = 0; i < debts.length; i++) {
                                 Debts = parseInt(Debts) + parseInt(debts[i].amount)
@@ -155,7 +168,7 @@ exports.createcomission = async (req, res) => {
                                             net_comission: NetCommission,
                                             monthly_commision: MonthlyComm,
                                             yearly_commision: YearlyComm,
-                                            date_created: req.body.commision_created_at
+                                            date_created: dateMonthly
                                         });
                                         commAdd.save((error, result) => {
                                             if (error) {

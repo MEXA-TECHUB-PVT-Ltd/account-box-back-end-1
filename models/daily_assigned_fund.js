@@ -11,6 +11,7 @@ const daily_Assigned_fundSchema = new mongoose.Schema({
     },
     amount: String,
     date: String,
+    dateTime:String
 }
 );
 module.exports = mongoose.model("daily_Assigned_fund", daily_Assigned_fundSchema);

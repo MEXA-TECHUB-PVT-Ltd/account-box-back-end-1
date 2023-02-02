@@ -86,7 +86,7 @@ exports.getTurnoverByDateRangeAndProductId = (req, res) => {
         {
         product_id:req.body.product_id, 
         $or:[
-             { "created_at" : {"$gte": sdate, "$lte":edate}}
+             { "dateTime" : {"$gte": sdate, "$lte":edate}}
              ]}
              , function (err, foundResult) {
         try {

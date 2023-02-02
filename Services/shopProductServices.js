@@ -90,16 +90,22 @@ exports.deleteShopProduct = (req, res) => {
 // Create 
 exports.createShopProduct = async (req, res) => {
     const Createddate= req.body.created_at;
-    shopProductsModel.find({ shop_id: req.body.shop_id,product_id:req.body.product_id }, (error, result) => {
-        if (error) {
-            res.send(error)
-        } else {
-            // res.send(result)
-            if (result === undefined || result.length == 0) {
+    const ArrayTemp = req.body.product_id
+    console.log(ArrayTemp)
+    let nameArr = ArrayTemp.split(',');
+    console.log(nameArr);
+    // shopProductsModel.find({ shop_id: req.body.shop_id,product_id:req.body.product_id }, (error, result) => {
+    //     if (error) {
+    //         res.send(error)
+    //     } else {
+    //         // res.send(result)
+    //         if (result === undefined || result.length == 0) {
+    for (let i = 0; i < nameArr.length; i++) {
+
                 const ShopProduct = new shopProductsModel({
                     _id: mongoose.Types.ObjectId(),
                     shop_id: req.body.shop_id,
-                    product_id: req.body.product_id,
+                    product_id: nameArr[i],
                     created_at:moment(Createddate).format("DD/MM/YYYY")
 
                 });
@@ -107,10 +113,10 @@ exports.createShopProduct = async (req, res) => {
                     if (error) {
                         res.send(error)
                     } else {
-                        res.json({ data: result, message: "Created Successfully" })
+                        // res.json({ data: result, message: "Created Successfully" })
                         const updateData = {
                             $push: {
-                                shop_products: result.product_id
+                                shop_products: nameArr
                             }
                         }
                         const options = {
@@ -125,13 +131,16 @@ exports.createShopProduct = async (req, res) => {
                         })
                     }
                 })
-
-            } else {
-                res.json({ data: result, message: "Shop Product Already Exists for this Product and Shop" })
-
             }
-        }
-    })
+    res.json({data:nameArr, message: "Created Successfully" })
+
+
+            // } else {
+            //     res.json({ data: result, message: "Shop Product Already Exists for this Product and Shop" })
+
+            // }
+    //     }
+    // })
 
 }
 
