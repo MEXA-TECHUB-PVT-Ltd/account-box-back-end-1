@@ -5,7 +5,7 @@ router.get("/get-all" ,controller.getAlldaily_reportings)
 router.get("/get-daily_reportings-by-ID/:daily_reportingsId" , controller.getSpecificdaily_reporting)
 router.get("/get-daily_reportings-by-shopId/:shop_id" , controller.getFundsByShopId)
 router.get("/get-daily_reportings-by-date" , controller.getFundsByDate)
-router.get("/get-daily_reportings-by-shopId-and-date" , controller.getFundsByDateAndShopId)
+router.post("/get-daily_reportings-by-shopId-and-date" , controller.getFundsByDateAndShopId)
 router.post("/get-daily_reportings-by-shopId-and-status" , controller.getFundsByShopIdAndStatus)
 
 router.delete("/delete/:daily_reportingsId" , controller.deletedaily_reporting);

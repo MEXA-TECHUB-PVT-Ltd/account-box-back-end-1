@@ -24,6 +24,7 @@ const balance_accountSchema = new mongoose.Schema({
     shortage_status: Boolean,
     shortage_amount: String,
     date: String,
+    dateTime:String,
 }
 );
 module.exports = mongoose.model("balance_account", balance_accountSchema);

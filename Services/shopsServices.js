@@ -79,10 +79,10 @@ exports.deleteAll = (req, res) => {
     shopsModel.deleteMany({}, (error, result) => {
         if (error) {
             res.send(error)
-            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+            res.status(200).json({ result: error, error: true, message: "Some Error ", statusCode: 200 })
 
         } else {
-            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+            res.status(200).json({ result: result, error: false, message: "All Record Deleted Successful ", statusCode: 200 })
 
         }
     })
@@ -113,7 +113,7 @@ exports.createShop = async (req, res) => {
 
                                     const Shop = new shopsModel({
                                         _id: mongoose.Types.ObjectId(),
-                                        shop_no:req.body.shop_no,
+                                        shop_no: req.body.shop_no,
                                         tycoon_id: req.body.tycoon_id,
                                         manager_id: req.body.manager_id,
                                         name: req.body.name,
@@ -160,26 +160,61 @@ exports.createShop = async (req, res) => {
         }
     })
 
-    
+
 
 }
 // Update 
 exports.updateShop = async (req, res) => {
-    const updateData = {
-        shop_no:req.body.shop_no,
-        name: req.body.name,
-        img: req.body.img,
-    }
-    const options = {
-        new: true
-    }
-    shopsModel.findByIdAndUpdate(req.body._id, updateData, options, (error, result) => {
-        if (error) {
-            res.json(error.message)
-        } else {
-            res.send({ data: result, message: "Updated Successfully" })
+    if (req.body.manager_id === undefined) {
+        const updateData = {
+            shop_no: req.body.shop_no,
+            name: req.body.name,
+            img: req.body.img,
         }
-    })
+        const options = {
+            new: true
+        }
+        shopsModel.findByIdAndUpdate(req.body._id, updateData, options, (error, result) => {
+            if (error) {
+                res.json(error.message)
+            } else {
+                res.send({ data: result, message: "Updated Successfully" })
+            }
+        })
+    } else {
+        const updateData = {
+            shop_no: req.body.shop_no,
+            name: req.body.name,
+            img: req.body.img,
+            manager_id: req.body.manager_id,
+
+        }
+        const options = {
+            new: true
+        }
+        shopsModel.findByIdAndUpdate(req.body._id, updateData, options, (error, result) => {
+            if (error) {
+                res.json(error.message)
+            } else {
+                const updateData = {
+                    $push: {
+                        shop_id: result._id
+                    }
+                }
+                const options = {
+                    new: true
+                }
+                managersModel.findByIdAndUpdate(req.body.manager_id, updateData, options, (error, result) => {
+                    if (error) {
+                        res.json(error.message)
+                    } else {
+                        // res.send({ data: result, message: "Updated Successfully" })
+                    }
+                })
+                res.send({ data: result, message: "Updated Successfully" })
+            }
+        })
+    }
 }
 
 
