@@ -178,7 +178,8 @@ exports.createbalance_account = async (req, res) => {
                                                     expenses_amount: sum,
                                                     shortage_status: req.body.shortage_status,
                                                     shortage_amount: shortage_amount,
-                                                    date: moment(Createddate).format("DD/MM/YYYY")
+                                                    date: moment(Createddate).format("DD/MM/YYYY"),
+                                                    dateTime:Createddate
 
                                                 });
                                                 balance_account.save((error, result) => {

@@ -17,6 +17,8 @@ const expensesSchema = new mongoose.Schema({
     reason_of_amount: String,
     amount: String,
     created_at: String,
+    dateTime: String,
+
 }
 );
 module.exports = mongoose.model("expenses", expensesSchema);

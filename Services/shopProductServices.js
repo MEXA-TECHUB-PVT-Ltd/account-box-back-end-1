@@ -45,7 +45,14 @@ exports.getSingleShopProduct = (req, res) => {
     const ShopId = req.params.shop_id;
     shopProductsModel.find({ shop_id: ShopId }, function (err, foundResult) {
         try {
-            res.json({ data: foundResult ,count:foundResult.length})
+            let tempArr=[]
+                console.log(foundResult[0].product_id)
+                for(let i=0;i<foundResult.length;i++){
+                    tempArr.push(foundResult[i].product_id)
+                }
+                console.log(tempArr)
+             
+            res.json(tempArr)
         } catch (err) {
             res.json(err)
         }

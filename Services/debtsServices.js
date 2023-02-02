@@ -126,6 +126,7 @@ exports.createdebt = async (req, res) => {
                 amount: req.body.amount,
                 threshold_date: moment(Thresholddate).format("DD/MM/YYYY"),
                 created_at: moment(Createddate).format("DD/MM/YYYY"),
+                dateTime:Createddate,
                 is_created_by_manager: req.body.is_created_by_manager,
                 debt_status: req.body.debt_status,
             });

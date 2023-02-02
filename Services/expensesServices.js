@@ -128,7 +128,8 @@ exports.createexpense = async (req, res) => {
                     shop_id: req.body.shop_id,
                     reason_of_amount:req.body.reason_of_amount,
                     amount: req.body.amount,
-                    created_at:moment(Createddate).format("DD/MM/YYYY")
+                    created_at:moment(Createddate).format("DD/MM/YYYY"),
+                    dateTime:Createddate
 
                 });
                 expense.save((error, result) => {

@@ -17,6 +17,7 @@ const debtsSchema = new mongoose.Schema({
     amount: String,
     threshold_date: String,
     created_at: String,
+    dateTime: String,
     is_created_by_manager:Boolean,
     debt_status: {
         type: String,
