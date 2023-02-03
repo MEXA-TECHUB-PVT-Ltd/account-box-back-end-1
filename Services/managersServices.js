@@ -26,6 +26,17 @@ exports.getSpecificManager = (req, res) => {
         }
     })
 }
+// Get Manager 
+exports.getManagerByTycoonId = (req, res) => {
+    const Tycoonid = req.body.tycoon_id;
+    managersModel.find({ tycoon_id: Tycoonid }, function (err, foundResult) {
+        try {
+            res.json({data:foundResult})
+        } catch (err) {
+            res.json(err)
+        }
+    })
+}
 // Delete All
 exports.deleteAll = (req, res) => {
     managersModel.deleteMany({}, (error, result) => {

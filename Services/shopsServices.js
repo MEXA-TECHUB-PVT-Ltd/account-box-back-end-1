@@ -129,7 +129,8 @@ exports.createShop = async (req, res) => {
                                             const updateData = {
                                                 $push: {
                                                     shop_id: result._id
-                                                }
+                                                },
+                                                tycoon_id:req.body.tycoon_id
                                             }
                                             const options = {
                                                 new: true

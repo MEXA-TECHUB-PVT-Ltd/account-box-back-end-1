@@ -12,8 +12,8 @@ exports.getAllShopProducts = (req, res) => {
             res.send(result)
         }
     }).sort({ $natural: -1 })
-    .populate('shop_id')
-    .populate('product_id')
+        .populate('shop_id')
+        .populate('product_id')
 }
 // Get ShopProduct 
 exports.getSpecificShopProduct = (req, res) => {
@@ -25,17 +25,35 @@ exports.getSpecificShopProduct = (req, res) => {
             res.json(err)
         }
     }).populate('shop_id')
-    .populate('product_id')
+        .populate('product_id')
+}
+// Get ShopCashier 
+exports.getSpecificShopProductsByTycoonId = (req, res) => {
+    const ShopCashierId = req.body.tycoon_id;
+    let ResultArray = []
+    shopProductsModel.find({ tycoon_id: ShopCashierId }, function (err, foundResult) {
+        try {
+            // res.json({ data: foundResult })
+            for (let i = 0; i < foundResult.length; i++) {
+                ResultArray.push(foundResult[i].product_id)
+            }
+            res.json(ResultArray)
+
+        } catch (err) {
+            res.json(err)
+        }
+    }).populate('shop_id')
+        .populate('product_id')
 }
 // Delete All
 exports.deleteAll = (req, res) => {
     shopProductsModel.deleteMany({}, (error, result) => {
         if (error) {
             res.send(error)
-            res.status(200).json({ result: error,error:true, message: "Some Error " ,statusCode:200})
+            res.status(200).json({ result: error, error: true, message: "Some Error ", statusCode: 200 })
 
         } else {
-            res.status(200).json({ result: result,error:false, message: "All Record Deleted Successful " ,statusCode:200})
+            res.status(200).json({ result: result, error: false, message: "All Record Deleted Successful ", statusCode: 200 })
 
         }
     })
@@ -45,19 +63,19 @@ exports.getSingleShopProduct = (req, res) => {
     const ShopId = req.params.shop_id;
     shopProductsModel.find({ shop_id: ShopId }, function (err, foundResult) {
         try {
-            let tempArr=[]
-                console.log(foundResult[0].product_id)
-                for(let i=0;i<foundResult.length;i++){
-                    tempArr.push(foundResult[i].product_id)
-                }
-                console.log(tempArr)
-             
+            let tempArr = []
+            console.log(foundResult[0].product_id)
+            for (let i = 0; i < foundResult.length; i++) {
+                tempArr.push(foundResult[i].product_id)
+            }
+            console.log(tempArr)
+
             res.json(tempArr)
         } catch (err) {
             res.json(err)
         }
     }).populate('shop_id')
-    .populate('product_id')
+        .populate('product_id')
 }
 
 // Delete 
@@ -68,20 +86,20 @@ exports.deleteShopProduct = (req, res) => {
             res.send({ message: error.message })
         } else {
             const updateData = {
-            $pull: {
-                shop_products: result.product_id
+                $pull: {
+                    shop_products: result.product_id
+                }
             }
-        }
-        const options = {
-            new: true
-        }
-        shopsModel.findByIdAndUpdate(result.shop_id, updateData, options, (error, result) => {
-            if (error) {
-                res.json(error.message)
-            } else {
-                // res.send({ data: result, message: "Updated Successfully" })
+            const options = {
+                new: true
             }
-        })
+            shopsModel.findByIdAndUpdate(result.shop_id, updateData, options, (error, result) => {
+                if (error) {
+                    res.json(error.message)
+                } else {
+                    // res.send({ data: result, message: "Updated Successfully" })
+                }
+            })
             res.json({ message: "Deleted Successfully" })
 
         }
@@ -89,31 +107,26 @@ exports.deleteShopProduct = (req, res) => {
 }
 // Create 
 exports.createShopProduct = async (req, res) => {
-    const Createddate= req.body.created_at;
+    const Createddate = req.body.created_at;
     const ArrayTemp = req.body.product_id
     console.log(ArrayTemp)
     let nameArr = ArrayTemp.split(',');
     console.log(nameArr);
-    // shopProductsModel.find({ shop_id: req.body.shop_id,product_id:req.body.product_id }, (error, result) => {
-    //     if (error) {
-    //         res.send(error)
-    //     } else {
-    //         // res.send(result)
-    //         if (result === undefined || result.length == 0) {
-    for (let i = 0; i < nameArr.length; i++) {
-
+    shopsModel.find({ _id: req.body.shop_id }, function (err, foundResult) {
+        try {
+            const tycoon_id = foundResult[0].tycoon_id
+            for (let i = 0; i < nameArr.length; i++) {
                 const ShopProduct = new shopProductsModel({
                     _id: mongoose.Types.ObjectId(),
                     shop_id: req.body.shop_id,
+                    tycoon_id: tycoon_id,
                     product_id: nameArr[i],
-                    created_at:moment(Createddate).format("DD/MM/YYYY")
-
+                    created_at: moment(Createddate).format("DD/MM/YYYY")
                 });
                 ShopProduct.save((error, result) => {
                     if (error) {
                         res.send(error)
                     } else {
-                        // res.json({ data: result, message: "Created Successfully" })
                         const updateData = {
                             $push: {
                                 shop_products: nameArr
@@ -126,22 +139,16 @@ exports.createShopProduct = async (req, res) => {
                             if (error) {
                                 res.json(error.message)
                             } else {
-                                // res.send({ data: result, message: "Updated Successfully" })
                             }
                         })
                     }
                 })
             }
-    res.json({data:nameArr, message: "Created Successfully" })
-
-
-            // } else {
-            //     res.json({ data: result, message: "Shop Product Already Exists for this Product and Shop" })
-
-            // }
-    //     }
-    // })
-
+            res.json({ data: nameArr, message: "Created Successfully" })
+        } catch (err) {
+            res.json(err)
+        }
+    })
 }
 
 

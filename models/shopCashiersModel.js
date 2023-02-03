@@ -9,6 +9,10 @@ const shopCashierSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'cashier'
     },
+    tycoon_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tycoon'
+    },
     created_at: String,
 }
 );
