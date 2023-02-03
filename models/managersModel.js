@@ -9,7 +9,11 @@ const managersSchema = new mongoose.Schema({
     shop_id:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'shop'
-    }]
+    }],
+    tycoon_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tycoon'
+    },
 }
 );
 module.exports = mongoose.model("managers", managersSchema);

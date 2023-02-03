@@ -27,6 +27,24 @@ exports.getSpecificShopCashier = (req, res) => {
     }).populate('shop_id')
         .populate('cashier_id')
 }
+// Get ShopCashier 
+exports.getSpecificShopCashierByTycoonId = (req, res) => {
+    const ShopCashierId = req.body.tycoon_id;
+    let ResultArray=[]
+    shopCashiersModel.find({ tycoon_id: ShopCashierId }, function (err, foundResult) {
+        try {
+            // res.json({ data: foundResult })
+            for(let i=0;i<foundResult.length;i++){
+                ResultArray.push(foundResult[i].cashier_id)
+            }
+            res.json(ResultArray)
+
+        } catch (err) {
+            res.json(err)
+        }
+    }).populate('shop_id')
+        .populate('cashier_id')
+}
 // Delete All
 exports.deleteAll = (req, res) => {
     shopCashiersModel.deleteMany({}, (error, result) => {
@@ -85,69 +103,51 @@ exports.deleteShopCashier = (req, res) => {
 // Create 
 exports.createShopCashier = async (req, res) => {
     const Createddate = req.body.created_at;
-    console.log(req.body.cashier_id)
     const ArrayTemp = req.body.cashier_id
     console.log(ArrayTemp)
     let nameArr = ArrayTemp.split(',');
-    console.log(nameArr);
-    // for (let i = 0; i < nameArr.length; i++) {
-        //  shopCashiersModel.find({ shop_id: req.body.shop_id,cashier_id:nameArr[i]}, (error, result) => {
-        //         if (error) {
-        //             res.send(error)
-        //         } else {
-        // res.send(result)
-        // if (result === undefined || result.length == 0) {
-    for (let i = 0; i < nameArr.length; i++) {
+    shopsModel.find({ _id: req.body.shop_id }, function (err, foundResult) {
+        try {
+            const tycoon_id = foundResult[0].tycoon_id
+            for (let i = 0; i < nameArr.length; i++) {
 
-            console.log(nameArr[0])
-        const ShopCashier = new shopCashiersModel({
-            _id: mongoose.Types.ObjectId(),
-            shop_id: req.body.shop_id,
-            cashier_id: nameArr[i],
-            created_at: moment(Createddate).format("DD/MM/YYYY")
+                const ShopCashier = new shopCashiersModel({
+                    _id: mongoose.Types.ObjectId(),
+                    shop_id: req.body.shop_id,
+                    tycoon_id: tycoon_id,
+                    cashier_id: nameArr[i],
+                    created_at: moment(Createddate).format("DD/MM/YYYY")
 
-        });
-    
-        ShopCashier.save((error, result) => {
-            if (error) {
-                res.send(error)
-            } else {
-                // let DataR=result
-                // Result.push(result)
-                
-                const updateData = {
-                    $push: {
-                        shop_cashiers:nameArr
-                    }
-                }
-                const options = {
-                    new: true
-                }
-                shopsModel.findByIdAndUpdate(req.body.shop_id, updateData, options, (error, result) => {
+                });
+
+                ShopCashier.save((error, result) => {
                     if (error) {
-                        res.json(error.message)
+                        res.send(error)
                     } else {
-                        // res.send({ data: result, message: "Updated Successfully" })
+                        const updateData = {
+                            $push: {
+                                shop_cashiers: nameArr
+                            }
+                        }
+                        const options = {
+                            new: true
+                        }
+                        shopsModel.findByIdAndUpdate(req.body.shop_id, updateData, options, (error, result) => {
+                            if (error) {
+                                res.json(error.message)
+                            } else {
+                            }
+                        })
+
                     }
                 })
-                // res.json({ data: result, message: "Created Successfully" })
-              
             }
-        })
+            res.json({ data: nameArr, message: "Created Successfully" })
 
-        // } else {
-        //     res.json({ data: result, message: "Shop Cashier Already Exists for this Cashier and Shop" })
-
-        // }
-        //     }
-        // })
-    }
-    res.json({data:nameArr, message: "Created Successfully" })
-               
-
-
-    // const 
-
+        } catch (err) {
+            res.json(err)
+        }
+    })
 
 }
 
