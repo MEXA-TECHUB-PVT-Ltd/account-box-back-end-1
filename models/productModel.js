@@ -4,6 +4,10 @@ const productSchema = new mongoose.Schema({
     name: String,
     price: String,
     created_at: String,
+    tycoon_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tycoon'
+    },
 }
 );
 module.exports = mongoose.model("products", productSchema);

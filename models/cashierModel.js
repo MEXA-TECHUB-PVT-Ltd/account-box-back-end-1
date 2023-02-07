@@ -9,6 +9,10 @@ const cashierSchema = new mongoose.Schema({
     },
     age: String,
     created_at: String,
+    tycoon_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tycoon'
+    },
 }
 );
 module.exports = mongoose.model("cashier", cashierSchema);

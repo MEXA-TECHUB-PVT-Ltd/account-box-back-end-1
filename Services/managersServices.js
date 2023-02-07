@@ -156,8 +156,8 @@ exports.createManager = async (req, res) => {
                     email: req.body.email,
                     password: hashedPassword,
                     photo: req.body.photo,
-                    created_at:moment(Createddate).format("DD/MM/YYYY")
-
+                    created_at:moment(Createddate).format("DD/MM/YYYY"),
+                    tycoon_id:req.body.tycoon_id
                 });
                 Manager.save((error, result) => {
                     if (error) {

@@ -7,5 +7,6 @@ router.delete("/delete/:CashierId" , controller.deleteCashier);
 router.post("/create" , controller.createCashier);
 router.put("/update" , controller.updateCashier);
 router.delete("/delete-all" ,controller.deleteAll)
+router.get("/get-Cashier-by-tycoon_id/:tycoon_id" , controller.getSpecificCashierByTycoon)
 
 module.exports = router;
