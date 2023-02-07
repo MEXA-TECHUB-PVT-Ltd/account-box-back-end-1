@@ -23,6 +23,17 @@ exports.getSpecificCashier = (req, res) => {
         }
     })
 }
+// Get Cashier 
+exports.getSpecificCashierByTycoon = (req, res) => {
+    const TycoonId = req.params.tycoon_id;
+    cashierModel.find({ tycoon_id: TycoonId }, function (err, foundResult) {
+        try {
+            res.json({ data: foundResult })
+        } catch (err) {
+            res.json(err)
+        }
+    })
+}
 // Delete All
 exports.deleteAll = (req, res) => {
     cashierModel.deleteMany({}, (error, result) => {
@@ -62,6 +73,7 @@ exports.createCashier = async (req, res) => {
                     phone_no: req.body.phone_no,
                     gender: req.body.gender,
                     age:req.body.age,
+                    tycoon_id:req.body.tycoon_id,
                     created_at:moment(Createddate).format("DD/MM/YYYY")
 
                 });
